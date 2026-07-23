@@ -10,8 +10,11 @@ import {
   calcProjectionLevels,
   calcRetracementLevels,
   detectTrend,
+  EXTENSION_RATIOS,
   FibLevel,
+  PROJECTION_RATIOS,
   ratioFromPrice,
+  RETRACEMENT_RATIOS,
 } from "@/lib/fibonacci";
 
 export default function FibonacciRetracement() {
@@ -28,28 +31,42 @@ export default function FibonacciRetracement() {
   const validBase =
     !Number.isNaN(start) && !Number.isNaN(end) && start !== end;
 
+  // 内置比例 + 自定义比例，去重后排序
+  const mergeRatios = (base: readonly number[], extra: number[]) =>
+    Array.from(new Set([...base, ...extra])).sort((a, b) => a - b);
+
   const retracementLevels = useMemo<FibLevel[]>(() => {
     if (!validBase) return [];
-    return calcRetracementLevels(start, end, [
-      ...[0, 0.236, 0.382, 0.5, 0.618, 0.786, 1],
-      ...customRatios.filter((r) => r >= 0 && r <= 1),
-    ].sort((a, b) => a - b));
+    return calcRetracementLevels(
+      start,
+      end,
+      mergeRatios(
+        RETRACEMENT_RATIOS,
+        customRatios.filter((r) => r >= 0 && r <= 1)
+      )
+    );
   }, [start, end, customRatios, validBase]);
 
   const extensionLevels = useMemo<FibLevel[]>(() => {
     if (!validBase) return [];
-    return calcExtensionLevels(start, end, [
-      ...[1, 1.272, 1.414, 1.618, 2, 2.618, 3.618, 4.236],
-      ...customRatios.filter((r) => r > 1),
-    ].sort((a, b) => a - b));
+    return calcExtensionLevels(
+      start,
+      end,
+      mergeRatios(
+        EXTENSION_RATIOS,
+        customRatios.filter((r) => r > 1)
+      )
+    );
   }, [start, end, customRatios, validBase]);
 
   const projectionLevels = useMemo<FibLevel[]>(() => {
     if (!validBase || Number.isNaN(c)) return [];
-    return calcProjectionLevels(start, end, c, [
-      ...[0.618, 1, 1.272, 1.618, 2, 2.618],
-      ...customRatios,
-    ].sort((a, b) => a - b));
+    return calcProjectionLevels(
+      start,
+      end,
+      c,
+      mergeRatios(PROJECTION_RATIOS, customRatios)
+    );
   }, [start, end, c, customRatios, validBase]);
 
   const addCustomRatio = () => {
@@ -132,7 +149,11 @@ export default function FibonacciRetracement() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="space-y-2">
           <label className="text-sm font-medium">
-            起点价（{validBase && detectTrend(start, end) === "up" ? "波段低点" : "波段高点"}）
+            起点价
+            {validBase &&
+              (detectTrend(start, end) === "up"
+                ? "（波段低点）"
+                : "（波段高点）")}
           </label>
           <Input
             type="number"
@@ -143,7 +164,11 @@ export default function FibonacciRetracement() {
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium">
-            终点价（{validBase && detectTrend(start, end) === "up" ? "波段高点" : "波段低点"}）
+            终点价
+            {validBase &&
+              (detectTrend(start, end) === "up"
+                ? "（波段高点）"
+                : "（波段低点）")}
           </label>
           <Input
             type="number"
@@ -263,7 +288,7 @@ export default function FibonacciRetracement() {
                 {currentRatio >= 0 && currentRatio <= 1
                   ? `处于波段内部（${currentRatio <= 0.5 ? "偏起点侧" : "偏终点侧"}）`
                   : currentRatio < 0
-                    ? "已跌破/跌破起点，超出波段范围"
+                    ? "已突破起点，超出波段范围"
                     : "已突破终点，处于扩展区域"}
               </p>
             </div>
