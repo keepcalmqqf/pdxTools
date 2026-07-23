@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { message } from "react-message-popup";
 import {
   calcExtensionLevels,
@@ -17,6 +17,24 @@ import {
   RETRACEMENT_RATIOS,
 } from "@/lib/fibonacci";
 
+const DRAFT_KEY = "fibonacci-retracement";
+const RECORDS_KEY = "fibonacci-retracement-records";
+
+interface CacheData {
+  startPrice: string;
+  endPrice: string;
+  cPrice: string;
+  currentPrice: string;
+  customRatios: number[];
+}
+
+interface FibRecord extends CacheData {
+  /** 标的名称，如 BTC、上证指数 */
+  name: string;
+  /** 保存时间戳 */
+  updatedAt: number;
+}
+
 export default function FibonacciRetracement() {
   const [startPrice, setStartPrice] = useState("");
   const [endPrice, setEndPrice] = useState("");
@@ -24,6 +42,113 @@ export default function FibonacciRetracement() {
   const [customRatio, setCustomRatio] = useState("");
   const [customRatios, setCustomRatios] = useState<number[]>([]);
   const [currentPrice, setCurrentPrice] = useState("");
+  const [symbol, setSymbol] = useState("");
+  const [records, setRecords] = useState<FibRecord[]>([]);
+  // 缓存是否已从 localStorage 恢复，恢复前不回写，避免覆盖旧数据
+  const [cacheLoaded, setCacheLoaded] = useState(false);
+
+  // 挂载后恢复上次的草稿和已保存的记录
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(DRAFT_KEY);
+      if (saved) {
+        const data = JSON.parse(saved) as Partial<CacheData>;
+        setStartPrice(data.startPrice ?? "");
+        setEndPrice(data.endPrice ?? "");
+        setCPrice(data.cPrice ?? "");
+        setCurrentPrice(data.currentPrice ?? "");
+        if (Array.isArray(data.customRatios)) {
+          setCustomRatios(
+            data.customRatios.filter((r) => typeof r === "number")
+          );
+        }
+      }
+      const savedRecords = localStorage.getItem(RECORDS_KEY);
+      if (savedRecords) {
+        const list = JSON.parse(savedRecords);
+        if (Array.isArray(list)) {
+          setRecords(list.filter((r) => r && typeof r.name === "string"));
+        }
+      }
+    } catch {
+      // 缓存损坏时忽略，按空数据处理
+    }
+    setCacheLoaded(true);
+  }, []);
+
+  // 草稿变化时写入缓存
+  useEffect(() => {
+    if (!cacheLoaded) return;
+    const data: CacheData = {
+      startPrice,
+      endPrice,
+      cPrice,
+      currentPrice,
+      customRatios,
+    };
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+  }, [cacheLoaded, startPrice, endPrice, cPrice, currentPrice, customRatios]);
+
+  // 记录列表变化时写入缓存
+  useEffect(() => {
+    if (!cacheLoaded) return;
+    localStorage.setItem(RECORDS_KEY, JSON.stringify(records));
+  }, [cacheLoaded, records]);
+
+  const currentData = (): CacheData => ({
+    startPrice,
+    endPrice,
+    cPrice,
+    currentPrice,
+    customRatios,
+  });
+
+  // 保存当前输入为一条命名记录，同名覆盖
+  const saveRecord = () => {
+    const name = symbol.trim();
+    if (!name) {
+      message.error("请先输入标的名称");
+      return;
+    }
+    const record: FibRecord = {
+      ...currentData(),
+      name,
+      updatedAt: Date.now(),
+    };
+    setRecords((prev) => {
+      const rest = prev.filter((r) => r.name !== name);
+      return [record, ...rest];
+    });
+    message.success(`已保存记录「${name}」`);
+  };
+
+  const loadRecord = (record: FibRecord) => {
+    setStartPrice(record.startPrice);
+    setEndPrice(record.endPrice);
+    setCPrice(record.cPrice);
+    setCurrentPrice(record.currentPrice);
+    setCustomRatios(record.customRatios);
+    setSymbol(record.name);
+    message.success(`已载入记录「${record.name}」`);
+  };
+
+  const deleteRecord = (name: string) => {
+    setRecords((prev) => prev.filter((r) => r.name !== name));
+    message.success(`已删除记录「${name}」`);
+  };
+
+  const clearCache = () => {
+    localStorage.removeItem(DRAFT_KEY);
+    localStorage.removeItem(RECORDS_KEY);
+    setStartPrice("");
+    setEndPrice("");
+    setCPrice("");
+    setCurrentPrice("");
+    setCustomRatios([]);
+    setSymbol("");
+    setRecords([]);
+    message.success("缓存记录已清除");
+  };
 
   const start = parseFloat(startPrice);
   const end = parseFloat(endPrice);
@@ -193,6 +318,64 @@ export default function FibonacciRetracement() {
         </div>
       </div>
 
+      <div className="space-y-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <Input
+            placeholder="标的名称，如 BTC、上证指数"
+            value={symbol}
+            onChange={(e) => setSymbol(e.target.value)}
+            className="w-56"
+            onKeyDown={(e) => e.key === "Enter" && saveRecord()}
+          />
+          <Button onClick={saveRecord}>保存记录</Button>
+          <span className="text-xs text-muted-foreground">
+            同名记录会被覆盖更新
+          </span>
+        </div>
+
+        {records.length > 0 && (
+          <div className="border rounded-md divide-y text-sm">
+            {records.map((record) => (
+              <div
+                key={record.name}
+                className="flex items-center gap-2 px-3 py-2 hover:bg-muted/50"
+              >
+                <button
+                  className="font-medium hover:text-yellow-600 transition-colors"
+                  title="点击载入该记录"
+                  onClick={() => loadRecord(record)}
+                >
+                  {record.name}
+                </button>
+                <span className="text-muted-foreground font-mono text-xs">
+                  {record.startPrice || "?"} → {record.endPrice || "?"}
+                </span>
+                <span className="text-muted-foreground text-xs">
+                  {new Date(record.updatedAt).toLocaleString()}
+                </span>
+                <div className="ml-auto flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => loadRecord(record)}
+                  >
+                    载入
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-muted-foreground hover:text-destructive"
+                    onClick={() => deleteRecord(record.name)}
+                  >
+                    删除
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       <div className="flex flex-wrap items-center gap-2">
         <Input
           type="number"
@@ -229,6 +412,14 @@ export default function FibonacciRetracement() {
             </Button>
           </>
         )}
+        <Button
+          variant="ghost"
+          size="sm"
+          className="ml-auto text-muted-foreground"
+          onClick={clearCache}
+        >
+          清除缓存记录
+        </Button>
       </div>
 
       <Tabs defaultValue="retracement">
