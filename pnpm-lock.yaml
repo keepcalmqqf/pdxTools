@@ -80,8 +80,8 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0(vite@4.5.3)(vue@3.4.21)
       '@vue/tsconfig':
-        specifier: ^0.4.0
-        version: 0.4.0
+        specifier: ^0.9.0
+        version: 0.9.1(typescript@5.1.6)(vue@3.4.21)
       eslint-config-vue:
         specifier: workspace:*
         version: link:../../packages/eslint-config-vue
@@ -3303,8 +3303,19 @@ packages:
   /@vue/shared@3.4.21:
     resolution: {integrity: sha512-PuJe7vDIi6VYSinuEbUIQgMIRZGgM8e4R+G+/dQTk0X1NEdvgvvgv7m+rfmDH1gZzyA1OjjoWskvHlfRNfQf3g==}
 
-  /@vue/tsconfig@0.4.0:
-    resolution: {integrity: sha512-CPuIReonid9+zOG/CGTT05FXrPYATEqoDGNrEaqS4hwcw5BUNM2FguC0mOwJD4Jr16UpRVl9N0pY3P+srIbqmg==}
+  /@vue/tsconfig@0.9.1(typescript@5.1.6)(vue@3.4.21):
+    resolution: {integrity: sha512-buvjm+9NzLCJL29KY1j1991YYJ5e6275OiK+G4jtmfIb+z4POywbdm0wXusT9adVWqe0xqg70TbI7+mRx4uU9w==}
+    peerDependencies:
+      typescript: '>= 5.8'
+      vue: ^3.4.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+      vue:
+        optional: true
+    dependencies:
+      typescript: 5.1.6
+      vue: 3.4.21(typescript@5.1.6)
     dev: true
 
   /@webassemblyjs/ast@1.11.6:
