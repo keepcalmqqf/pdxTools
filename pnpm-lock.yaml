@@ -68,8 +68,8 @@ importers:
         specifier: ^1.1.31
         version: 1.1.31
       '@tsconfig/node18':
-        specifier: ^2.0.1
-        version: 2.0.1
+        specifier: ^18.0.0
+        version: 18.2.6
       '@types/node':
         specifier: ^18.19.28
         version: 18.19.28
@@ -2422,8 +2422,8 @@ packages:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
     dev: true
 
-  /@tsconfig/node18@2.0.1:
-    resolution: {integrity: sha512-UqdfvuJK0SArA2CxhKWwwAWfnVSXiYe63bVpMutc27vpngCntGUZQETO24pEJ46zU6XM+7SpqYoMgcO3bM11Ew==}
+  /@tsconfig/node18@18.2.6:
+    resolution: {integrity: sha512-eAWQzAjPj18tKnDzmWstz4OyWewLUNBm9tdoN9LayzoboRktYx3Enk1ZXPmThj55L7c4VWYq/Bzq0A51znZfhw==}
     dev: true
 
   /@turbo/gen@1.13.1(@types/node@20.8.6)(typescript@5.4.3):
