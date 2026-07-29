@@ -11,16 +11,25 @@ const DEFAULT_STMT = `This device complies with part 15 of the FCC Rules. Operat
 (2) this device must accept any interference received, including interference that may cause undesired operation.`;
 
 const UkcaSvg = () => (
-  <svg viewBox="0 0 70 50" xmlns="http://www.w3.org/2000/svg">
-    <g fill="#000" fontFamily="Arial" fontWeight="900" textAnchor="middle">
-      <text x="35" y="20" fontSize="19" letterSpacing="1">
-        UK
-      </text>
-      <text x="35" y="42" fontSize="19" letterSpacing="1">
-        CA
-      </text>
+  <svg viewBox="0 0 46 50" xmlns="http://www.w3.org/2000/svg">
+    <g
+      fill="none"
+      stroke="#000"
+      strokeWidth="4.5"
+      strokeLinejoin="round"
+    >
+      {/* U */}
+      <path d="M 8 6 V 15 A 6 6 0 0 0 20 15 V 6" />
+      {/* K */}
+      <path d="M 26 6 V 22" />
+      <path d="M 37 6 L 26.5 14.5" />
+      <path d="M 29 12.5 L 38 22" />
+      {/* C */}
+      <path d="M 20 30 A 8 8 0 1 0 20 42" />
+      {/* A */}
+      <path d="M 26 44 L 33.5 28 L 41 44" />
+      <path d="M 28.8 38 H 38.2" />
     </g>
-    <rect x="6" y="23" width="58" height="2.5" fill="#000" />
   </svg>
 );
 
@@ -35,20 +44,12 @@ const CeSvg = () => (
 );
 
 const FcSvg = () => (
-  <svg viewBox="0 0 70 50" xmlns="http://www.w3.org/2000/svg">
-    <g fill="none" stroke="#000" strokeWidth="5">
-      <path d="M 34 6 A 20 20 0 1 0 34 44" />
+  <svg viewBox="0 0 82 50" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 6 h25 v6 h-18 v10 h13 v6 h-13 v16 h-7 z" fill="#000" />
+    <g fill="none" stroke="#000">
+      <path d="M 63 8 A 19 19 0 1 0 63 42" strokeWidth="6" />
+      <path d="M 60.5 17 A 10 10 0 1 0 60.5 33" strokeWidth="5" />
     </g>
-    <text
-      x="48"
-      y="36"
-      fontFamily="Arial"
-      fontWeight="900"
-      fontSize="26"
-      fill="#000"
-    >
-      F
-    </text>
   </svg>
 );
 
@@ -78,7 +79,7 @@ const RecycleSvg = () => (
 const MARKS = [
   { key: "ukca", name: "UKCA", Svg: UkcaSvg },
   { key: "ce", name: "CE", Svg: CeSvg },
-  { key: "fc", name: "FC", Svg: FcSvg },
+  { key: "fc", name: "FCC", Svg: FcSvg },
   { key: "weee", name: "垃圾桶", Svg: WeeeSvg },
   { key: "recycle", name: "循环", Svg: RecycleSvg },
 ] as const;
