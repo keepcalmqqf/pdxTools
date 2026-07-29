@@ -130,6 +130,9 @@ importers:
       '@radix-ui/react-toast':
         specifier: ^1.2.1
         version: 1.2.1(@types/react-dom@18.2.23)(@types/react@18.2.74)(react-dom@18.2.0)(react@18.2.0)
+      '@zumer/snapdom':
+        specifier: ^2.23.1
+        version: 2.23.1
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -3420,6 +3423,10 @@ packages:
   /@xtuc/long@4.2.2:
     resolution: {integrity: sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==}
     dev: true
+
+  /@zumer/snapdom@2.23.1:
+    resolution: {integrity: sha512-r+6LRFXIpzTxlvGBjTr7mhvVW05TozgyE1QFmvO1hbchdbl4Km5/7DIkeyl2+nEVbz8Sp6/K2g4b86pXhCrFIQ==}
+    dev: false
 
   /acorn-import-assertions@1.9.0(acorn@8.10.0):
     resolution: {integrity: sha512-cmMwop9x+8KFhxvKrKfPYmN6/pKTYYHBqLa0DfvVZcKMJWNyWLnaqND7dx/qn66R7ewM1UX5XMaDVP5wlVTaVA==}

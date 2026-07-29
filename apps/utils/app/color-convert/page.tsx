@@ -203,8 +203,8 @@ export default function ColorConvert() {
   };
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center space-x-4">
+    <div className="space-y-8 mobile-container">
+      <div className="flex flex-col items-center sm:flex-row gap-4">
         <Popover>
           <PopoverTrigger asChild>
             <div
@@ -304,12 +304,12 @@ export default function ColorConvert() {
           </PopoverContent>
         </Popover>
 
-        <div className="space-y-4 flex-1">
+        <div className="space-y-4 w-full flex-1">
           {Object.entries(color).map(([format, value]) => (
             <div key={format} className="flex items-center space-x-2">
               <Button
                 variant="outline"
-                className="w-20 uppercase"
+                className="w-20 shrink-0 uppercase touch-feedback"
                 onClick={() => setCurrentFormat(format as ColorFormat)}
               >
                 {format}
@@ -320,7 +320,7 @@ export default function ColorConvert() {
                   handleColorChange(e.target.value, format as ColorFormat)
                 }
                 className={cn(
-                  "font-mono",
+                  "font-mono text-base",
                   currentFormat === format
                     ? "ring-2 ring-primary"
                     : "bg-muted"
@@ -330,6 +330,7 @@ export default function ColorConvert() {
               <Button
                 variant="outline"
                 size="icon"
+                className="shrink-0 touch-feedback"
                 onClick={() => handleCopy(value)}
               >
                 复制

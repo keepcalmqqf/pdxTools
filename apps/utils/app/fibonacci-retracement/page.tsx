@@ -283,6 +283,7 @@ export default function FibonacciRetracement() {
           <Input
             type="number"
             placeholder="如 100"
+            className="text-base"
             value={startPrice}
             onChange={(e) => setStartPrice(e.target.value)}
           />
@@ -298,6 +299,7 @@ export default function FibonacciRetracement() {
           <Input
             type="number"
             placeholder="如 200"
+            className="text-base"
             value={endPrice}
             onChange={(e) => setEndPrice(e.target.value)}
           />
@@ -306,7 +308,7 @@ export default function FibonacciRetracement() {
           <label className="text-sm font-medium">趋势方向</label>
           <Input
             readOnly
-            className="bg-muted"
+            className="bg-muted text-base"
             value={
               validBase
                 ? detectTrend(start, end) === "up"
@@ -324,7 +326,7 @@ export default function FibonacciRetracement() {
             placeholder="标的名称，如 BTC、上证指数"
             value={symbol}
             onChange={(e) => setSymbol(e.target.value)}
-            className="w-56"
+            className="w-full sm:w-56 text-base"
             onKeyDown={(e) => e.key === "Enter" && saveRecord()}
           />
           <Button onClick={saveRecord}>保存记录</Button>
@@ -338,10 +340,10 @@ export default function FibonacciRetracement() {
             {records.map((record) => (
               <div
                 key={record.name}
-                className="flex items-center gap-2 px-3 py-2 hover:bg-muted/50"
+                className="flex flex-wrap items-center gap-2 px-3 py-2 hover:bg-muted/50"
               >
                 <button
-                  className="font-medium hover:text-yellow-600 transition-colors"
+                  className="font-medium hover:text-primary transition-colors"
                   title="点击载入该记录"
                   onClick={() => loadRecord(record)}
                 >
@@ -382,7 +384,7 @@ export default function FibonacciRetracement() {
           placeholder="自定义比例，如 0.886"
           value={customRatio}
           onChange={(e) => setCustomRatio(e.target.value)}
-          className="w-56"
+          className="w-full sm:w-56 text-base"
           onKeyDown={(e) => e.key === "Enter" && addCustomRatio()}
         />
         <Button onClick={addCustomRatio}>添加比例</Button>
@@ -423,7 +425,7 @@ export default function FibonacciRetracement() {
       </div>
 
       <Tabs defaultValue="retracement">
-        <TabsList>
+        <TabsList className="w-full justify-start overflow-x-auto">
           <TabsTrigger value="retracement">回撤位</TabsTrigger>
           <TabsTrigger value="extension">扩展位</TabsTrigger>
           <TabsTrigger value="projection">投影位（ABC）</TabsTrigger>
@@ -444,6 +446,7 @@ export default function FibonacciRetracement() {
             <Input
               type="number"
               placeholder="如 150"
+              className="text-base"
               value={cPrice}
               onChange={(e) => setCPrice(e.target.value)}
             />
@@ -463,6 +466,7 @@ export default function FibonacciRetracement() {
             <Input
               type="number"
               placeholder="输入价格反推所处比例"
+              className="text-base"
               value={currentPrice}
               onChange={(e) => setCurrentPrice(e.target.value)}
             />

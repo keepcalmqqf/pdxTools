@@ -29,36 +29,40 @@ export default function ParseTable(props: ParseTableProps) {
       <Button className="btn btn-primary h-8 min-h-8" onClick={handleDownload}>
         下载
       </Button>
-      {source === "BD09" ? (
-        <div className=" h-[50px] flex justify-start items-center">
-          <div className="w-[25%]">百度经度</div>
-          <div className="w-[25%]">百度纬度</div>
-          <div className="w-[25%]">高德经度</div>
-          <div className="w-[25%]">高德纬度</div>
+      <div className="overflow-x-auto">
+        <div className="min-w-[480px]">
+          {source === "BD09" ? (
+            <div className="h-[50px] flex justify-start items-center text-sm">
+              <div className="w-[25%]">百度经度</div>
+              <div className="w-[25%]">百度纬度</div>
+              <div className="w-[25%]">高德经度</div>
+              <div className="w-[25%]">高德纬度</div>
+            </div>
+          ) : (
+            <div className="h-[50px] flex justify-start items-center text-sm">
+              <div className="w-[25%]">高德经度</div>
+              <div className="w-[25%]">高德纬度</div>
+              <div className="w-[25%]">百度经度</div>
+              <div className="w-[25%]">百度纬度</div>
+            </div>
+          )}
+          <List
+            itemCount={parseLngLatList.length}
+            itemSize={50}
+            height={500}
+            width={"100%"}
+          >
+            {({ index, style }: { index: any; style: any }) => (
+              <div style={style} className="flex justify-start items-center text-sm">
+                <div className="w-[25%] break-all">{parseLngLatList[index][0]}</div>
+                <div className="w-[25%] break-all">{parseLngLatList[index][1]}</div>
+                <div className="w-[25%] break-all">{parseLngLatList[index][2]}</div>
+                <div className="w-[25%] break-all">{parseLngLatList[index][3]}</div>
+              </div>
+            )}
+          </List>
         </div>
-      ) : (
-        <div className=" h-[50px] flex justify-start items-center">
-          <div className="w-[25%]">高德经度</div>
-          <div className="w-[25%]">高德纬度</div>
-          <div className="w-[25%]">百度经度</div>
-          <div className="w-[25%]">百度纬度</div>
-        </div>
-      )}
-      <List
-        itemCount={parseLngLatList.length}
-        itemSize={50}
-        height={500}
-        width={"100%"}
-      >
-        {({ index, style }: { index: any; style: any }) => (
-          <div style={style} className=" flex justify-start items-center">
-            <div className="w-[25%]">{parseLngLatList[index][0]}</div>
-            <div className="w-[25%]">{parseLngLatList[index][1]}</div>
-            <div className="w-[25%]">{parseLngLatList[index][2]}</div>
-            <div className="w-[25%]">{parseLngLatList[index][3]}</div>
-          </div>
-        )}
-      </List>
+      </div>
     </div>
   );
 }

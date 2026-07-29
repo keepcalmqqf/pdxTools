@@ -87,7 +87,7 @@ https://i.ebayimg.com/images/g/f-0AAOSwipFoO02S/s-l1600.webp`;
               value={inputUrls}
               onChange={(e) => setInputUrls(e.target.value)}
               rows={6}
-              className="w-full p-3 border rounded-md font-mono text-sm bg-background text-foreground border-border focus:ring-2 focus:ring-ring focus:border-ring transition-colors"
+              className="w-full p-3 border rounded-md font-mono text-base bg-background text-foreground border-border focus:ring-2 focus:ring-ring focus:border-ring transition-colors"
             />
           </div>
 
@@ -137,7 +137,7 @@ https://i.ebayimg.com/images/g/f-0AAOSwipFoO02S/s-l1600.webp`;
                   value={outputUrls}
                   readOnly
                   rows={6}
-                  className="w-full p-3 border rounded-md font-mono text-sm bg-background text-foreground border-border"
+                  className="w-full p-3 border rounded-md font-mono text-base bg-background text-foreground border-border"
                 />
               </div>
               <button

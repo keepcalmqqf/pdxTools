@@ -40,10 +40,10 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-between w-[80%] lg:w-[40%] m-auto">
+    <main className="flex flex-col items-center justify-between w-[90%] sm:w-[80%] lg:w-[40%] m-auto py-4 sm:py-6 mobile-container">
       <Tabs
         defaultValue="BD09,GCJ02"
-        className="w-[400px]"
+        className="w-full max-w-[400px]"
         onValueChange={handleChangeTab}
       >
         <TabsList className="grid w-full grid-cols-2">
@@ -54,7 +54,7 @@ export default function Home() {
 
       <Textarea
         ref={textareaRef}
-        className="my-5"
+        className="my-5 text-base"
         rows={6}
         placeholder="每个地址的经纬度占一行，格式：经度,纬度
         例如：38.76623,116.43213"
@@ -65,7 +65,9 @@ export default function Home() {
       </Button>
 
       {parseLngLatList.length > 0 && (
-        <ParseTable source={source} parseLngLatList={parseLngLatList} />
+        <div className="w-full overflow-x-auto">
+          <ParseTable source={source} parseLngLatList={parseLngLatList} />
+        </div>
       )}
     </main>
   );

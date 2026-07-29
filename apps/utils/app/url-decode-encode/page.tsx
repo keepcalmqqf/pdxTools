@@ -114,9 +114,9 @@ export default function URLDecodeEncode() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center space-x-4">
+      <div className="flex flex-wrap items-center gap-4">
         <Select value={encodeMode} onValueChange={(v) => setEncodeMode(v as EncodeMode)}>
-          <SelectTrigger className="w-[250px]">
+          <SelectTrigger className="w-full sm:w-[250px]">
             <SelectValue placeholder="选择编码方式" />
           </SelectTrigger>
           <SelectContent>
@@ -134,7 +134,7 @@ export default function URLDecodeEncode() {
         </Select>
 
         <Select value={decodeMode} onValueChange={(v) => setDecodeMode(v as DecodeMode)}>
-          <SelectTrigger className="w-[250px]">
+          <SelectTrigger className="w-full sm:w-[250px]">
             <SelectValue placeholder="选择解码方式" />
           </SelectTrigger>
           <SelectContent>
@@ -152,7 +152,7 @@ export default function URLDecodeEncode() {
         </Select>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <div className="flex justify-between">
             <span className="text-sm text-muted-foreground">输入</span>
@@ -173,6 +173,7 @@ export default function URLDecodeEncode() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             rows={15}
+            className="text-base"
           />
         </div>
 
@@ -193,7 +194,7 @@ export default function URLDecodeEncode() {
               </Button>
             </div>
           </div>
-          <Textarea value={output} readOnly rows={15} />
+          <Textarea value={output} readOnly rows={15} className="text-base" />
         </div>
       </div>
 

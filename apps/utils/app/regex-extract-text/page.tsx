@@ -133,9 +133,9 @@ export default function RegexExtractText() {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Select value={selectedPattern} onValueChange={handlePatternChange}>
-            <SelectTrigger className="w-[200px]">
+            <SelectTrigger className="w-full sm:w-[200px]">
               <SelectValue placeholder="选择匹配模式" />
             </SelectTrigger>
             <SelectContent>
@@ -152,7 +152,7 @@ export default function RegexExtractText() {
               placeholder="输入自定义正则表达式"
               value={regex}
               onChange={(e) => setRegex(e.target.value)}
-              className="flex-1"
+              className="flex-1 min-w-0 text-base"
             />
           )}
 
@@ -160,7 +160,7 @@ export default function RegexExtractText() {
             value={flags}
             onValueChange={(value) => setFlags(value)}
           >
-            <SelectTrigger className="w-[200px]">
+            <SelectTrigger className="w-full sm:w-[200px]">
               <SelectValue placeholder="选择标志位" />
             </SelectTrigger>
             <SelectContent>
@@ -193,7 +193,7 @@ export default function RegexExtractText() {
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <div className="flex justify-between">
             <span className="text-sm text-muted-foreground">输入文本</span>
@@ -211,6 +211,7 @@ export default function RegexExtractText() {
             value={text}
             onChange={(e) => setText(e.target.value)}
             rows={20}
+            className="text-base"
           />
         </div>
 
@@ -228,7 +229,12 @@ export default function RegexExtractText() {
               复制结果
             </Button>
           </div>
-          <Textarea value={result.join("\n")} readOnly rows={20} />
+          <Textarea
+            value={result.join("\n")}
+            readOnly
+            rows={20}
+            className="text-base"
+          />
         </div>
       </div>
     </div>

@@ -38,26 +38,26 @@ const ImagePreview = () => {
           type="file"
           accept="image/*"
           onChange={handleImageUpload}
-          className="block w-full text-sm text-gray-500
+          className="block w-full text-base text-gray-500
                      file:mr-4 file:py-2 file:px-4
                      file:rounded-full file:border-0
-                     file:text-sm file:font-semibold
+                     file:text-base file:font-semibold
                      file:bg-blue-50 file:text-blue-700
                      hover:file:bg-blue-100"
         />
       </label>
       {imageSrc && (
         <div className="flex flex-col items-center">
-          <div className="mb-3">
+          <div className="mb-3 flex flex-wrap justify-center gap-2">
             <button
               onClick={handleRotate}
-              className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+              className="bg-blue-500 text-white px-4 py-2 rounded"
             >
               Rotate
             </button>
             <button
               onClick={handleZoomIn}
-              className="bg-green-500 text-white px-4 py-2 rounded mr-2"
+              className="bg-green-500 text-white px-4 py-2 rounded"
             >
               Zoom In
             </button>
@@ -72,6 +72,7 @@ const ImagePreview = () => {
             className="overflow-hidden border border-gray-300 flex justify-center items-center"
             style={{
               width: "300px",
+              maxWidth: "100%",
               height: "300px",
             }}
           >

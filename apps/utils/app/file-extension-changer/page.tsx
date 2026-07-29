@@ -414,9 +414,9 @@ Read-Host "Press Enter to continue"`;
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-6">
+    <div className="max-w-6xl mx-auto p-4 sm:p-6 space-y-6">
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-foreground">
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
           批量修改文件后缀名
         </h1>
         <p className="text-muted-foreground">
@@ -437,7 +437,7 @@ Read-Host "Press Enter to continue"`;
 
       {/* 视频演示区域 */}
       {showVideo && (
-        <div className="bg-card p-6 rounded-lg border space-y-4">
+        <div className="bg-card p-4 sm:p-6 rounded-lg border space-y-4">
           <h2 className="text-xl font-semibold flex items-center gap-2">
             <Play className="w-5 h-5" />
             使用演示视频
@@ -497,20 +497,20 @@ Read-Host "Press Enter to continue"`;
       )}
 
       {/* 文件夹选择区域 */}
-      <div className="bg-card p-6 rounded-lg border space-y-4">
+      <div className="bg-card p-4 sm:p-6 rounded-lg border space-y-4">
         <h2 className="text-xl font-semibold flex items-center gap-2">
           <FolderOpen className="w-5 h-5" />
           选择文件夹
         </h2>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
           <input
             ref={fileInputRef}
             type="file"
             {...({ webkitdirectory: true } as any)}
             multiple
             onChange={handleFolderSelect}
-            className="flex-1 flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex-1 flex h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-base sm:text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             placeholder="选择包含文件的文件夹"
           />
           <Button
@@ -524,7 +524,7 @@ Read-Host "Press Enter to continue"`;
         {selectedFolder && (
           <div className="text-sm text-muted-foreground">
             已选择文件夹:{" "}
-            <span className="font-mono bg-muted px-2 py-1 rounded">
+            <span className="font-mono bg-muted px-2 py-1 rounded break-all">
               {selectedFolder}
             </span>
             <span className="ml-4">包含 {files.length} 个文件</span>
@@ -553,7 +553,7 @@ Read-Host "Press Enter to continue"`;
 
       {/* 后缀名设置区域 */}
       {files.length > 0 && (
-        <div className="bg-card p-6 rounded-lg border space-y-4">
+        <div className="bg-card p-4 sm:p-6 rounded-lg border space-y-4">
           <h2 className="text-xl font-semibold flex items-center gap-2">
             <FileText className="w-5 h-5" />
             设置文件后缀名
@@ -631,7 +631,7 @@ Read-Host "Press Enter to continue"`;
                       setOldExtensions(extensions);
                     }}
                     placeholder="例如: jpg, png, gif (用逗号分隔)"
-                    className="font-mono"
+                    className="font-mono text-base sm:text-sm"
                   />
                   <div className="text-xs text-muted-foreground">
                     用逗号分隔多个后缀名，如: jpg, png, gif
@@ -646,13 +646,13 @@ Read-Host "Press Enter to continue"`;
                   value={newExtension}
                   onChange={(e) => setNewExtension(e.target.value)}
                   placeholder="例如: webp"
-                  className="font-mono"
+                  className="font-mono text-base sm:text-sm"
                 />
               </div>
             </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <Button onClick={updateFileExtensions} className="flex-1">
               更新文件列表
             </Button>
@@ -671,8 +671,8 @@ Read-Host "Press Enter to continue"`;
 
       {/* 文件列表预览 */}
       {files.length > 0 && (
-        <div className="bg-card p-6 rounded-lg border space-y-4">
-          <div className="flex items-center justify-between">
+        <div className="bg-card p-4 sm:p-6 rounded-lg border space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-xl font-semibold flex items-center gap-2">
               <FileText className="w-5 h-5" />
               文件列表预览
@@ -716,7 +716,7 @@ Read-Host "Press Enter to continue"`;
       )}
 
       {/* 使用说明 */}
-      <div className="bg-muted/50 p-6 rounded-lg space-y-3">
+      <div className="bg-muted/50 p-4 sm:p-6 rounded-lg space-y-3">
         <h3 className="text-lg font-semibold">使用说明</h3>
         <div className="text-sm text-muted-foreground space-y-2">
           <p>1. 点击"浏览文件夹"选择包含需要修改后缀名的文件的文件夹</p>
